@@ -1,7 +1,7 @@
 const tasks = [];
 let time = 0;
 let timer = null;
-let timerBreak = null;
+let timerbreack = null;
 let current = null;
 let statusApp = "stop";
 
@@ -34,15 +34,16 @@ function createTask(value) {
 function renderTasks() {
   const html = tasks.map((task) => {
     return `
-        <div class="task">
-        <div class="completed">${
-          task.completed
-            ? "<span class='done'>Done</span>"
-            : `<button class="start-button" data-id="${task.id}">Start</button></div>`
-        }
-            <div class="title">${task.title}</div>
-        </div>`;
+    <div class="task"> 
+     <div class="completed">${
+       task.completed
+         ? "<span class ='done'>Done</span>"
+         : `<button class="start-button"data-id="${task.id}">Start</button></div>`
+     }
+    <div class="title">${task.title}</div>
+    </div>`;
   });
+
   const tasksContainer = document.querySelector("#tasks");
   tasksContainer.innerHTML = html.join("");
 
@@ -50,7 +51,7 @@ function renderTasks() {
   startButtons.forEach((startButton) => {
     startButton.addEventListener("click", () => {
       if (!timer) {
-        startButtonHandler(startButton.getAttribute("data-id"));
+        startButtonHandler(startButton.getAttibute("data-id"));
         startButton.textContent = "In progress...";
       }
     });
@@ -71,15 +72,15 @@ function timerHandler(id = null) {
   time--;
   renderTime();
   if (time === 0) {
-    markComplete(id);
+    markCompleted(id);
     clearInterval(timer);
     renderTasks();
     startBreak();
   }
 }
 
-function markComplete(id) {
-  const taskId = tasks.findIndex((task) => task.id === id);
+function markCompleted(id) {
+  const taskId = tasks.findIndex((task) => task.id == id);
   tasks[taskId].completed = true;
 }
 
@@ -90,13 +91,13 @@ function startBreak() {
 }
 
 function timerBreakHandler() {
-  time--;
+  timer--;
   renderTime();
   if (time === 0) {
     clearInterval(timerBreak);
     current = null;
     document.querySelector("#time #taskName").textContent = "";
-    renderTime();
+    renderTasks();
   }
 }
 
